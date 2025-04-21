@@ -1,116 +1,87 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>El Kompa Meño</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>Kompa Meño Web</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
     body {
-      font-family: 'Orbitron', sans-serif;
-      background: black;
-      color: #00ffe7;
-    }
-
-    header {
-      text-align: center;
-      padding: 4rem 1rem 2rem;
-      font-size: 2.8rem;
-      color: #00ffe7;
-    }
-
-    nav {
+      background-color: #0a0a0a;
+      color: #00ffcc;
+      font-family: 'Courier New', monospace;
       display: flex;
-      justify-content: center;
-      gap: 2rem;
-      margin-bottom: 4rem;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px;
     }
 
-    nav a {
-      color: #00ffe7;
-      text-decoration: none;
-      border: 1px solid #00ffe7;
-      padding: 0.5rem 1.5rem;
-      border-radius: 5px;
-      transition: all 0.3s ease;
-    }
-
-    nav a:hover {
-      background: #00ffe7;
-      color: #000;
-    }
-
-    section {
-      max-width: 800px;
-      margin: auto;
-      text-align: center;
-      line-height: 1.6;
-      font-size: 1.2rem;
-      padding: 0 1rem;
-    }
-
-    .redes {
-      margin-top: 3rem;
+    h1 {
       display: flex;
-      justify-content: center;
-      gap: 2rem;
-      flex-wrap: wrap;
+      align-items: center;
+      font-size: 36px;
+      margin-bottom: 50px;
     }
 
-    .redes a {
-      color: #00ffe7;
+    h1 img {
+      width: 50px;
+      height: 50px;
+      margin-right: 15px;
+    }
+
+    .menu {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+      width: 100%;
+      max-width: 600px;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      background-color: #111;
+      padding: 15px 20px;
+      border-radius: 12px;
       text-decoration: none;
-      border: 1px solid #00ffe7;
-      padding: 0.5rem 1rem;
-      border-radius: 5px;
-      transition: all 0.3s ease;
+      color: #00ffee;
+      font-size: 22px;
+      transition: background 0.3s, transform 0.2s;
     }
 
-    .redes a:hover {
-      background-color: #00ffe7;
-      color: #000;
+    .menu-item:hover {
+      background-color: #222;
+      transform: scale(1.02);
+      color: #ffffff;
     }
 
-    footer {
-      text-align: center;
-      margin-top: 5rem;
-      font-size: 0.9rem;
-      color: #008888;
+    .menu-item img {
+      width: 40px;
+      height: 40px;
+      margin-right: 20px;
     }
   </style>
 </head>
 <body>
-  <header>El Kompa Meño</header>
-  <nav>
-    <a href="#proyectos">Proyectos</a>
-    <a href="#sobre-mi">Sobre Mí</a>
-    <a href="#contacto">Contacto</a>
-  </nav>
 
-  <section id="proyectos">
-    <h2>Proyectos destacados</h2>
-    <p>Explora mis creaciones y el estilo que define mi universo digital.</p>
-  </section>
+  <h1><img src="iconos/kompa.png" alt="Kompa">Kompa Meño Web</h1>
 
-  <section id="sobre-mi">
-    <h2>Sobre Mí</h2>
-    <p>El Kompa Meño: mezclando el flow del barrio con el código del futuro.</p>
-  </section>
+  <div class="menu">
+    <a class="menu-item" href="inicio-visual/">
+      <img src="iconos/inicio-visual.png" alt="Inicio visual">
+      Inicio visual para tu día
+    </a>
+    <a class="menu-item" href="scripts-docs/">
+      <img src="iconos/scripts-docs.png" alt="Scripts docs">
+      Documentación de tus scripts
+    </a>
+    <a class="menu-item" href="mini-juegos/">
+      <img src="iconos/mini-juegos.png" alt="Mini juegos">
+      Mini juegos hechos por ti
+    </a>
+    <a class="menu-item" href="dashboard-tareas/">
+      <img src="iconos/dashboard-tareas.png" alt="Dashboard tareas">
+      Dashboard para tareas diarias
+    </a>
+  </div>
 
-  <section id="contacto">
-    <h2>Redes Sociales</h2>
-    <div class="redes">
-      <a href="https://www.tiktok.com/@el_kompa_meno?_t=ZM-8vgNUV4s1Id&_r=1" target="_blank">TikTok</a>
-      <a href="https://www.facebook.com/share/1AUqj6iBHH/?mibextid=wwXIfr" target="_blank">Facebook</a>
-      <a href="https://www.instagram.com/elkompameno?igsh=czI1d2tza3F5dWxz&utm_source=qr" target="_blank">Instagram</a>
-    </div>
-  </section>
-
-  <footer>&copy; 2025 - El Kompa Meño - Página creada con neón y estilo</footer>
 </body>
 </html>
