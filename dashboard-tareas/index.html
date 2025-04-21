@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard para tareas diarias</title>
+  <style>
+    body {
+      background-color: #0a0a0a;
+      color: #00ffcc;
+      font-family: 'Courier New', monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 30px;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      max-width: 600px;
+    }
+
+    li {
+      margin: 10px 0;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      background-color: #111;
+      padding: 15px 20px;
+      border-radius: 12px;
+      text-decoration: none;
+      color: #00ffee;
+      font-size: 20px;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .menu-item:hover {
+      background-color: #222;
+      transform: scale(1.02);
+      color: #ffffff;
+    }
+
+    .menu-item img {
+      width: 40px;
+      height: 40px;
+      margin-right: 20px;
+    }
+
+    /* Formulario de agregar URL */
+    .add-url-form {
+      margin-top: 30px;
+      padding: 20px;
+      background-color: #111;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 600px;
+      text-align: center;
+    }
+
+    .add-url-form input, .add-url-form button {
+      padding: 10px;
+      margin: 10px;
+      border: none;
+      border-radius: 6px;
+    }
+
+    .add-url-form input {
+      width: 70%;
+    }
+
+    .add-url-form button {
+      background-color: #00ffcc;
+      color: #111;
+      cursor: pointer;
+    }
+
+    .add-url-form button:hover {
+      background-color: #00cc99;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>dashboard-tareas</h1>
+
+  <!-- Lista de archivos HTML dentro de la carpeta -->
+  <ul>
+    <li><a class="menu-item" href="file1.html">Archivo 1</a></li>
+    <li><a class="menu-item" href="file2.html">Archivo 2</a></li>
+    <li><a class="menu-item" href="file3.html">Archivo 3</a></li>
+    <!-- Agrega más archivos HTML aquí si los tienes -->
+  </ul>
+
+  <!-- Botón para regresar al inicio -->
+  <a href="../index.html" class="menu-item">Volver al inicio</a>
+
+  <!-- Formulario para agregar un nuevo URL -->
+  <div class="add-url-form">
+    <h3>Agregar un nuevo Proyecto</h3>
+    <input type="text" id="url-name" placeholder="Nombre del proyecto">
+    <input type="url" id="url-link" placeholder="URL del proyecto">
+    <button onclick="addProject()">Agregar</button>
+  </div>
+
+  <!-- Lista de proyectos añadidos -->
+  <div id="projects-list" class="add-url-form">
+    <h3>Proyectos Guardados</h3>
+    <ul id="projects-ul"></ul>
+  </div>
+
+  <script>
+    // Cargar los proyectos guardados desde localStorage
+    const loadProjects = () => {
+      const projects = JSON.parse(localStorage.getItem('projects')) || [];
+      const projectsList = document.getElementById('projects-ul');
+      projectsList.innerHTML = '';
+
+      projects.forEach((project, index) => {
+        const listItem = document.createElement('li');
+        listItem.innerHTML = `
+          <a href="${project.url}" class="menu-item" target="_blank">${project.name}</a>
+          <button onclick="editProject(${index})">Editar</button>
+          <button onclick="deleteProject(${index})">Eliminar</button>
+        `;
+        projectsList.appendChild(listItem);
+      });
+    };
+
+    // Agregar un nuevo proyecto
+    const addProject = () => {
+      const name = document.getElementById('url-name').value;
+      const url = document.getElementById('url-link').value;
+
+      if (name && url) {
+        const projects = JSON.parse(localStorage.getItem('projects')) || [];
+        projects.push({ name, url });
+        localStorage.setItem('projects', JSON.stringify(projects));
+        document.getElementById('url-name').value = '';
+        document.getElementById('url-link').value = '';
+        loadProjects(); // Recargar la lista de proyectos
+      } else {
+        alert('Por favor, completa ambos campos.');
+      }
+    };
+
+    // Editar un proyecto
+    const editProject = (index) => {
+      const projects = JSON.parse(localStorage.getItem('projects')) || [];
+      const project = projects[index];
+      const newName = prompt('Nuevo nombre del proyecto:', project.name);
+      const newUrl = prompt('Nueva URL del proyecto:', project.url);
+
+      if (newName && newUrl) {
+        projects[index] = { name: newName, url: newUrl };
+        localStorage.setItem('projects', JSON.stringify(projects));
+        loadProjects(); // Recargar la lista de proyectos
+      }
+    };
+
+    // Eliminar un proyecto
+    const deleteProject = (index) => {
+      const projects = JSON.parse(localStorage.getItem('projects')) || [];
+      projects.splice(index, 1);
+      localStorage.setItem('projects', JSON.stringify(projects));
+      loadProjects(); // Recargar la lista de proyectos
+    };
+
+    // Cargar los proyectos al cargar la página
+    loadProjects();
+  </script>
+
+</body>
+</html>
