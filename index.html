@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kompa Meño Web</title>
   <style>
     body {
@@ -58,11 +59,67 @@
       height: 40px;
       margin-right: 20px;
     }
+
+    /* Widgets */
+    .widgets {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 800px;
+      margin-top: 50px;
+      margin-bottom: 50px;
+    }
+
+    .widget {
+      background-color: #111;
+      color: #00ffee;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      width: 150px;
+      font-size: 18px;
+    }
+
+    .clock {
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+
+    .widget h3 {
+      margin: 10px 0;
+    }
+
+    .widget p {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .date {
+      font-size: 18px;
+    }
   </style>
 </head>
 <body>
 
   <h1><img src="iconos/kompa.png" alt="Kompa">Kompa Meño Web</h1>
+
+  <!-- Widgets de escritorio -->
+  <div class="widgets">
+    <div class="widget">
+      <div class="clock" id="clock"></div>
+      <p>Reloj</p>
+    </div>
+
+    <div class="widget">
+      <h3>Frase del día</h3>
+      <p id="quote"></p>
+    </div>
+
+    <div class="widget">
+      <h3>Clima</h3>
+      <p id="weather"></p>
+    </div>
+  </div>
 
   <div class="menu">
     <a class="menu-item" href="inicio-visual/">
@@ -82,6 +139,43 @@
       Dashboard para tareas diarias
     </a>
   </div>
+
+  <script>
+    // Reloj analógico
+    function updateClock() {
+      const now = new Date();
+      const hours = now.getHours().toString().padStart(2, '0');
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+      const seconds = now.getSeconds().toString().padStart(2, '0');
+      document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Frase motivadora
+    const quotes = [
+      "El único modo de hacer un gran trabajo es amar lo que haces.",
+      "No te detengas cuando estés cansado, detente cuando hayas terminado.",
+      "El futuro pertenece a aquellos que creen en la belleza de sus sueños.",
+      "El éxito es la suma de pequeños esfuerzos repetidos día tras día.",
+      "Todo lo que imagines es real."
+    ];
+    document.getElementById('quote').textContent = quotes[Math.floor(Math.random() * quotes.length)];
+
+    // Clima (API de OpenWeather)
+    const weatherApiKey = "tu_api_key";  // Sustituye con tu clave de OpenWeather
+    const weatherCity = "Ciudad";  // Sustituye con tu ciudad
+    const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${weatherCity}&appid=${weatherApiKey}&units=metric&lang=es`;
+
+    async function getWeather() {
+      const response = await fetch(weatherUrl);
+      const data = await response.json();
+      const temperature = data.main.temp;
+      const description = data.weather[0].description;
+      document.getElementById('weather').textContent = `${temperature}°C, ${description}`;
+    }
+    getWeather();
+  </script>
 
 </body>
 </html>
