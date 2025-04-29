@@ -1,0 +1,93 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: url('fondo.png') no-repeat center center fixed;
+  background-size: cover;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.container {
+  max-width: 700px;
+  margin: 60px auto;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 30px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  color: #ffffff;
+}
+
+.logo {
+  width: 50px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+h1 {
+  font-size: 28px;
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.menu-item {
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 12px 20px;
+  border-radius: 12px;
+  text-decoration: none;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.menu-item img {
+  width: 36px;
+  height: 36px;
+  margin-right: 15px;
+}
+
+.menu-item:hover {
+  background-color: rgba(255, 255, 255, 0.35);
+  transform: scale(1.02);
+}
+
+form {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+form input,
+form button {
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+}
+
+form input {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+form button {
+  background-color: #00ffaa;
+  color: #000;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+form button:hover {
+  background-color: #00dd99;
+}
