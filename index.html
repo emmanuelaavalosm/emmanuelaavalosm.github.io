@@ -2,180 +2,40 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Kompa Meño Web</title>
-  <style>
-    body {
-      background-color: #0a0a0a;
-      color: #00ffcc;
-      font-family: 'Courier New', monospace;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 40px;
-    }
-
-    h1 {
-      display: flex;
-      align-items: center;
-      font-size: 36px;
-      margin-bottom: 50px;
-    }
-
-    h1 img {
-      width: 50px;
-      height: 50px;
-      margin-right: 15px;
-    }
-
-    .menu {
-      display: flex;
-      flex-direction: column;
-      gap: 25px;
-      width: 100%;
-      max-width: 600px;
-    }
-
-    .menu-item {
-      display: flex;
-      align-items: center;
-      background-color: #111;
-      padding: 15px 20px;
-      border-radius: 12px;
-      text-decoration: none;
-      color: #00ffee;
-      font-size: 22px;
-      transition: background 0.3s, transform 0.2s;
-    }
-
-    .menu-item:hover {
-      background-color: #222;
-      transform: scale(1.02);
-      color: #ffffff;
-    }
-
-    .menu-item img {
-      width: 40px;
-      height: 40px;
-      margin-right: 20px;
-    }
-
-    /* Widgets */
-    .widgets {
-      display: flex;
-      justify-content: space-between;
-      width: 100%;
-      max-width: 800px;
-      margin-top: 50px;
-      margin-bottom: 50px;
-    }
-
-    .widget {
-      background-color: #111;
-      color: #00ffee;
-      padding: 20px;
-      border-radius: 12px;
-      text-align: center;
-      width: 150px;
-      font-size: 18px;
-    }
-
-    .clock {
-      font-size: 32px;
-      margin-bottom: 20px;
-    }
-
-    .widget h3 {
-      margin: 10px 0;
-    }
-
-    .widget p {
-      font-size: 20px;
-      font-weight: bold;
-    }
-
-    .date {
-      font-size: 18px;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-  <h1><img src="iconos/kompa.png" alt="Kompa">Kompa Meño Web</h1>
-
-  <!-- Widgets de escritorio -->
-  <div class="widgets">
-    <div class="widget">
-      <div class="clock" id="clock"></div>
-      <p>Reloj</p>
+  <div class="container">
+    <h1><img src="iconos/kompa.png" alt="Kompa" class="logo">Kompa Meño Web</h1>
+    <div id="menu" class="menu">
+      <!-- Entradas fijas -->
+      <a href="inicio-visual/index.html" class="menu-item">
+        <img src="iconos/inicio-visual.png" alt="">Inicio visual para tu día
+      </a>
+      <a href="scripts-docs/index.html" class="menu-item">
+        <img src="iconos/scripts-docs.png" alt="">Documentación de tus scripts
+      </a>
+      <a href="mini-juegos/index.html" class="menu-item">
+        <img src="iconos/mini-juegos.png" alt="">Mini juegos hechos por ti
+      </a>
+      <a href="dashboard-tareas/index.html" class="menu-item">
+        <img src="iconos/dashboard-tareas.png" alt="">Dashboard para tareas diarias
+      </a>
+      <a href="mis-tools/index.html" class="menu-item">
+        <img src="iconos/mis-tools.png" alt="">Mis Tools
+      </a>
     </div>
 
-    <div class="widget">
-      <h3>Frase del día</h3>
-      <p id="quote"></p>
-    </div>
-
-    <div class="widget">
-      <h3>Clima</h3>
-      <p id="weather"></p>
-    </div>
+    <form id="addForm">
+      <input type="text" id="nombre" placeholder="Nombre de la carpeta" required>
+      <input type="text" id="ruta" placeholder="Ruta/index.html" required>
+      <input type="text" id="icono" placeholder="iconos/archivo.png" required>
+      <button type="submit">Agregar acceso</button>
+    </form>
   </div>
 
-  <div class="menu">
-    <a class="menu-item" href="inicio-visual/index.html">
-      <img src="iconos/inicio-visual.png" alt="Inicio visual">
-      Inicio visual para tu día
-    </a>
-    <a class="menu-item" href="scripts-docs/index.html">
-      <img src="iconos/scripts-docs.png" alt="Scripts docs">
-      Documentación de tus scripts
-    </a>
-    <a class="menu-item" href="mini-juegos/index.html">
-      <img src="iconos/mini-juegos.png" alt="Mini juegos">
-      Mini juegos hechos por ti
-    </a>
-    <a class="menu-item" href="dashboard-tareas/index.html">
-      <img src="iconos/dashboard-tareas.png" alt="Dashboard tareas">
-      Dashboard para tareas diarias
-    </a>
-  </div>
-
-  <script>
-    // Reloj analógico
-    function updateClock() {
-      const now = new Date();
-      const hours = now.getHours().toString().padStart(2, '0');
-      const minutes = now.getMinutes().toString().padStart(2, '0');
-      const seconds = now.getSeconds().toString().padStart(2, '0');
-      document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
-    }
-    setInterval(updateClock, 1000);
-    updateClock();
-
-    // Frase motivadora
-    const quotes = [
-      "El único modo de hacer un gran trabajo es amar lo que haces.",
-      "No te detengas cuando estés cansado, detente cuando hayas terminado.",
-      "El futuro pertenece a aquellos que creen en la belleza de sus sueños.",
-      "El éxito es la suma de pequeños esfuerzos repetidos día tras día.",
-      "Todo lo que imagines es real."
-    ];
-    document.getElementById('quote').textContent = quotes[Math.floor(Math.random() * quotes.length)];
-
-    // Clima (API de OpenWeather)
-    const weatherApiKey = "tu_api_key";  // Sustituye con tu clave de OpenWeather
-    const weatherCity = "Ciudad";  // Sustituye con tu ciudad
-    const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${weatherCity}&appid=${weatherApiKey}&units=metric&lang=es`;
-
-    async function getWeather() {
-      const response = await fetch(weatherUrl);
-      const data = await response.json();
-      const temperature = data.main.temp;
-      const description = data.weather[0].description;
-      document.getElementById('weather').textContent = `${temperature}°C, ${description}`;
-    }
-    getWeather();
-  </script>
-
+  <script src="script.js"></script>
 </body>
 </html>
