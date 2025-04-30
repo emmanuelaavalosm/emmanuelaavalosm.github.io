@@ -1,45 +1,93 @@
-import asyncio
-import websockets
-import pyautogui
-import json
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Mousepad Remoto</title>
+  <style>
+    body {
+      margin: 0;
+      background: #121212;
+      color: white;
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    #touchArea {
+      width: 90vw;
+      height: 60vh;
+      background: #1e1e1e;
+      margin-top: 20px;
+      border: 2px solid #00ffcc;
+      touch-action: none;
+    }
+    .btn {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 18px;
+      border: none;
+      border-radius: 5px;
+      background: #00ffcc;
+      color: #000;
+      cursor: pointer;
+    }
+    #buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>Mousepad Remoto</h1>
+  <div id="touchArea"></div>
 
-# Tamaño actual de la pantalla
-screen_width, screen_height = pyautogui.size()
+  <div id="buttons">
+    <button class="btn" onclick="sendClick('left')">Clic Izquierdo</button>
+    <button class="btn" onclick="sendClick('right')">Clic Derecho</button>
+    <button class="btn" onclick="sendClick('double')">Doble Clic</button>
+    <button class="btn" onclick="sendKey('enter')">Enter</button>
+    <button class="btn" onclick="sendKey('esc')">Escape</button>
+    <button class="btn" onclick="sendScroll(-50)">Scroll ↑</button>
+    <button class="btn" onclick="sendScroll(50)">Scroll ↓</button>
+  </div>
 
-# Posición inicial del cursor
-prev_x, prev_y = None, None
+  <script>
+    const ws = new WebSocket("ws://<TU_IP>:8765");
 
-async def mouse_handler(websocket):
-    global prev_x, prev_y
-    async for message in websocket:
-        try:
-            data = json.loads(message)
+    let lastTouch = null;
 
-            if data["type"] == "move":
-                dx, dy = data["dx"], data["dy"]
-                x, y = pyautogui.position()
-                pyautogui.moveTo(x + dx, y + dy)
+    ws.onopen = () => console.log("Conectado al servidor WebSocket");
 
-            elif data["type"] == "click":
-                if data["button"] == "left":
-                    pyautogui.click()
-                elif data["button"] == "right":
-                    pyautogui.click(button='right')
-                elif data["button"] == "double":
-                    pyautogui.doubleClick()
+    const touchArea = document.getElementById("touchArea");
 
-            elif data["type"] == "key":
-                pyautogui.press(data["key"])
+    touchArea.addEventListener("touchstart", e => {
+      lastTouch = e.touches[0];
+    });
 
-            elif data["type"] == "scroll":
-                pyautogui.scroll(data["amount"])
+    touchArea.addEventListener("touchmove", e => {
+      e.preventDefault();
+      if (!lastTouch) return;
 
-        except Exception as e:
-            print("Error:", e)
+      let touch = e.touches[0];
+      let dx = touch.clientX - lastTouch.clientX;
+      let dy = touch.clientY - lastTouch.clientY;
+      lastTouch = touch;
 
-async def main():
-    async with websockets.serve(mouse_handler, "0.0.0.0", 8765):
-        print("Servidor WebSocket corriendo en ws://<TU_IP>:8765")
-        await asyncio.Future()  # Ejecuta indefinidamente
+      ws.send(JSON.stringify({ type: "move", dx: dx, dy: dy }));
+    });
 
-asyncio.run(main())
+    function sendClick(button) {
+      ws.send(JSON.stringify({ type: "click", button: button }));
+    }
+
+    function sendKey(key) {
+      ws.send(JSON.stringify({ type: "key", key: key }));
+    }
+
+    function sendScroll(amount) {
+      ws.send(JSON.stringify({ type: "scroll", amount: amount }));
+    }
+  </script>
+</body>
+</html>
